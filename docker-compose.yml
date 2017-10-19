@@ -1,0 +1,21 @@
+version: "3"
+services:
+  hubot:
+    build:
+      context: ./hubot
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10k"
+        max-file: "2" 
+    volumes:
+      - ./hubot/src:/usr/src/app
+    links:
+      - redis
+    ports:
+      - "80:80"
+      - "443:443"
+  redis:
+    image: redis
+
+
