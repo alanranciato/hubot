@@ -22,8 +22,8 @@ Congratulations! You made a change. Great.
 Do this to restart the bot.
 
 ```sh
-docker restart hubot_hubot_1
-
-# and then attach to it
-docker attach hubot_hubot_1
+# On hubot shell
+mybot reload
 ```
+
+That is it!
