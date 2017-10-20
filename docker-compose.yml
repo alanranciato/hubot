@@ -9,13 +9,22 @@ services:
         max-size: "10k"
         max-file: "2" 
     volumes:
-      - ./hubot/src:/usr/src/app
+      - ./hubot/src/external-scripts.json:/usr/src/app/external-scripts.json
+      - ./hubot/src/package.json:/usr/src/app/package.json
+      - ./hubot/src/scripts:/usr/src/app/scripts
     links:
       - redis
+    environment:
+      - REDIS_URL=redis://redis:16379
+    stdin_open: true
+    tty: true
     ports:
       - "80:80"
       - "443:443"
+      - "8080:8080"
   redis:
     image: redis
+    volumes:
+      - ./redis/data:/var/lib/redis
 
 

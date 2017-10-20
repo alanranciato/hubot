@@ -11,14 +11,18 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x| bash -
 RUN apt-get -y install nodejs ruby-full
 RUN npm install -g coffee-script yo generator-hubot \
       && useradd hubot -m -u 1000
-
+COPY init.sh /init.sh
+RUN chmod a+x /init.sh
 ## Initially create an app
 RUN mkdir -p $APP_PATH /tmp && chown -R hubot:hubot $APP_PATH
 USER hubot
 WORKDIR $APP_PATH
 RUN yo hubot --defaults --owner="$BOT_OWNER" --name="$BOT_NAME" --description="$BOT_DESC" && npm install coffee-script --save
 USER root
-RUN ln -s `pwd`/bin/hubot /usr/bin/hubot
+RUN npm install && rm hubot-scripts.json
+
+EXPOSE 8123
+EXPOSE 5858
 
 USER hubot
-CMD ["bin/hubot"]
+CMD ["/init.sh"]
